@@ -1,0 +1,46 @@
+{
+  "name": "carbon-starter",
+  "private": true,
+  "author": "The Sage Group plc",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "test": "vitest",
+    "build": "tsc -b tsconfig.build.json && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "clean": "npx rimraf coverage && npx rimraf dist && npx rimraf node_modules"
+  },
+  "dependencies": {
+    "@sage/design-tokens": "4.35.0",
+    "@sage/design-tokens-fusion": "npm:@sage/design-tokens@17.7.0",
+    "carbon-react": "158.26.4",
+    "react": "^17.0 || ^18.0",
+    "react-dom": "^17.0 || ^18.0",
+    "styled-components": "^5.3.11"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^18.0",
+    "@types/react-dom": "^18.0",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@vitest/coverage-istanbul": "^4.0.14",
+    "@vitest/eslint-plugin": "^1.5.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-no-unsanitized": "^4.1.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-testing-library": "^7.13.5",
+    "jsdom": "^27.2.0",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1",
+    "vite": "^7.2.6",
+    "vitest": "^4.0.14"
+  }
+}
