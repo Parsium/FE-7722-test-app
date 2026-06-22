@@ -10,6 +10,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "~@sage": resolve(import.meta.dirname, "./node_modules/@sage/"),
+      "styled-components": resolve(
+        import.meta.dirname,
+        "node_modules",
+        "styled-components",
+      ),
     },
   },
   test: {

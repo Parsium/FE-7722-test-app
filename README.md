@@ -1,29 +1,40 @@
-# Carbon Starter template
+# FE-7694 test app
 
-Starter template for creating a new [Carbon](https://carbon.sage.com/) app, powered by [Vite](https://vitejs.dev/). Also includes some ESLint rules and a test setup to aid development.
+Test app for verifying the bug from FE-7694 has resolved.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/Parsium/carbon-starter)
+## Running the app (without PR assets):
 
-## Commands
+To start the dev server:
 
-All commands are run from the root of the project, from a terminal:
+```zsh
+npm start
+```
 
-| Command         | Action                                             |
-| :-------------- | :------------------------------------------------- |
-| `npm install`   | Installs dependencies                              |
-| `npm start`     | Starts local dev server at `localhost:5173`        |
-| `npm test`      | Run tests                                          |
-| `npm run lint`  | Run linter on project to quick identity any issues |
-| `npm run build` | Build your production app to `./dist/`             |
+## Running the app (with PR assets):
 
-## Test setup
+1. Within the carbon repo, pull in the latest changes from carbon branch:
 
-This template uses the [`vitest`](https://vitest.dev/) framework for running tests in a [`jsdom`](https://github.com/jsdom/jsdom) environment, with [`istanbul`](https://istanbul.js.org/) for measuring code coverage.
+```zsh
+cd <path-to-carbon-repo>
+git switch FE-7694-menu-styling-fix
+git pull
+```
 
-> If you are unfamiliar with `vitest`, the framework shares many similarities with `jest`, making it easier to get started.
+2. Within this test app repo, run the setup script to build Carbon from the PR branch and install it:
 
-[React Testing Library](https://testing-library.com/docs/react-testing-library/intro) and its sister libraries, [`user-event`](https://testing-library.com/docs/user-event/intro) and [`jest-dom`](https://github.com/testing-library/jest-dom), are also included.
+```zsh
+./setup.zsh <path-to-carbon-repo> FE-7694-menu-styling-fix
+```
 
-A sample test file `App.spec.tsx` has been included for you.
+3. Then run the dev server:
 
-If you require any global setup to be triggered once before all tests are run, the `setup-tests.ts` file has been provided.
+```zsh
+npm start
+```
+
+If you need to uninstall the PR assets afterwards, run:
+
+```zsh
+git restore .
+npm ci
+```
