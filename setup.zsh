@@ -1,58 +1,39 @@
 #!/bin/zsh
 
+CURRENT_DIR=$(pwd)
+CARBON_BRANCH=support-sc-namespacing
 CARBON_DIR=$1
-CARBON_BRANCH=$2
 
-if [ -z "$CARBON_DIR" ]; then
-    echo "Error: Path to carbon-react directory is not set. Please provide the path to the carbon-react directory."
-    echo "Usage: ./setup.zsh /path/to/carbon-react"
-    exit 1
+if [ -z "$CARBON_DIR" ] || [ -z "$CARBON_BRANCH" ]; then
+  echo "❌ Please provide the Carbon directory and branch as arguments."
+  echo "Usage: ./setup.zsh <carbon_directory> <carbon_branch>"
+  exit 1
 fi
-
 if [ ! -d "$CARBON_DIR" ]; then
-    echo "Error: CARBON_DIR is not a valid directory. Please provide a valid path to the carbon-react directory."
-    echo "Usage: ./setup.zsh /path/to/carbon-react"
-    exit 1
+  echo "❌ The provided Carbon directory does not exist or is not a directory: $CARBON_DIR"
+  exit 1
 fi
 
-if [ -z "$CARBON_BRANCH" ]; then
-    echo "Error: Branch name is not set. Please provide the branch name to switch to."
-    echo "Usage: ./setup.zsh /path/to/carbon-react branch-name"
-    exit 1
+echo "🧹 Removing previous Carbon PR assets"
+rm carbon-react-*.tgz > /dev/null 2>&1
+
+echo "📦 Pulling in latest changes from Carbon PR (may take a while)"
+cd $CARBON_DIR
+if ! git show-ref --verify --quiet refs/heads/$CARBON_BRANCH; then
+  echo "❌ The provided Carbon branch does not exist: $CARBON_BRANCH"
+  cd $CURRENT_DIR
+  exit 1
 fi
-
-PROJECT_DIR=$(pwd)
-
-echo "📦 Building carbon-react from PR changes"
-
-cd "$CARBON_DIR"
-
-if git switch $CARBON_BRANCH; then
-    echo "Switched to branch $CARBON_BRANCH"
-else
-    echo "Error: Failed to switch to branch $CARBON_BRANCH"
-    exit 1
-fi
-
+git checkout $CARBON_BRANCH
+git pull
 npm ci
+
+echo "📦 Building Carbon (may take a while)"
 npm run build
-npm pack
+npm pack --pack-destination $CURRENT_DIR
 
-TGZ_FILE=$(ls *.tgz)
+echo "📦 Installing Carbon PR assets into test app"
+cd $CURRENT_DIR
+npm i --save carbon-react@$(ls carbon-react-*.tgz)
 
-if [ -f "$TGZ_FILE" ]; then
-    mv "$TGZ_FILE" "FE-7694-fix.tgz"
-else
-    echo "Error: No .tgz file generated. Please check the build process."
-    exit 1
-fi
-
-mv "FE-7694-fix.tgz" "$PROJECT_DIR"
-git switch master
-
-echo "📦 Installing carbon-react from built assets"
-
-cd "$PROJECT_DIR"
-npm install carbon-react@file:FE-7694-fix.tgz
-
-echo "✅ Setup completed successfully."
+echo "✅ Carbon PR assets installed into test app"

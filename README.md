@@ -1,40 +1,27 @@
-# FE-7694 test app
+# FE-7722 test app
 
-Test app for verifying the bug from FE-7694 has resolved.
+Test app for testing the new namespacing feature introduced in FE-7722.
 
-## Running the app (without PR assets):
+## Acceptance criteria
 
-To start the dev server:
+Changes pass if:
+
+- [ ] CSS class names are prefixed with the Carbon package version installed
+
+## Installing PR assets
+
+To install the build assets from the Carbon PR branch, run the following:
+
+```zsh
+npm run setup -- <carbon-repo-path>
+```
+
+If changes have been made to the PR branch, re-run this command to make sure these changes are installed.
+
+## Running the app
+
+Run:
 
 ```zsh
 npm start
-```
-
-## Running the app (with PR assets):
-
-1. Within the carbon repo, pull in the latest changes from carbon branch:
-
-```zsh
-cd <path-to-carbon-repo>
-git switch FE-7694-menu-styling-fix
-git pull
-```
-
-2. Within this test app repo, run the setup script to build Carbon from the PR branch and install it:
-
-```zsh
-./setup.zsh <path-to-carbon-repo> FE-7694-menu-styling-fix
-```
-
-3. Then run the dev server:
-
-```zsh
-npm start
-```
-
-If you need to uninstall the PR assets afterwards, run:
-
-```zsh
-git restore .
-npm ci
 ```

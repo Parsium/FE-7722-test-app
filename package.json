@@ -5,16 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "test": "vitest",
-    "build": "tsc -b tsconfig.build.json && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "clean": "npx rimraf coverage && npx rimraf dist && npx rimraf node_modules"
+    "setup": "./setup.zsh"
   },
   "dependencies": {
     "@sage/design-tokens": "4.35.0",
     "@sage/design-tokens-fusion": "npm:@sage/design-tokens@17.7.0",
-    "carbon-react": "159.3.1",
+    "carbon-react": "file:carbon-react-159.15.0.tgz",
     "carbon-react-older": "npm:carbon-react@159.3.0",
     "react": "^17.0 || ^18.0",
     "react-dom": "^17.0 || ^18.0",
